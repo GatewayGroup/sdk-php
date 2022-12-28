@@ -26,7 +26,7 @@
     // secret in developer settings : secret
     // serverPubKey in developer settings : Server Public Key
     // privateKey in developer settings : Private Key
-    // gggpayCfg::init($verNo, $apiUrl, $appId, $key, $secret, $serverPubKey, $privateKey);
+    gggpayCfg::init($verNo, $apiUrl, $appId, $key, $secret, $serverPubKey, $privateKey);
 
     // Here is an example of a deposit
     // return deposit result: code=1,message=,transactionId=12817291,paymentUrl=https://www.xxxx...
