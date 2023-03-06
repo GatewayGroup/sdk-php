@@ -26,7 +26,7 @@
     // secret in developer settings : secret
     // serverPubKey in developer settings : Server Public Key
     // privateKey in developer settings : Private Key
-    gggpayCfg::init($verNo, $apiUrl, $appId, $key, $secret, $serverPubKey, $privateKey);
+    // gggpayCfg::init($verNo, $apiUrl, $appId, $key, $secret, $serverPubKey, $privateKey);
 
     // Here is an example of a deposit
     // return deposit result: code=1,message=,transactionId=12817291,paymentUrl=https://www.xxxx...
@@ -35,12 +35,12 @@
 
     // Here is an example of a withdraw
     // return withdraw result: code=1,message=,transactionId=12817291
-    $withdrawResult = gggpaySdk::withdraw('100173', 1.06, 'MYR', 'CIBBMYKL', 'GGGPay Test', '234719327401231','', 'gggpay@hotmail.com', '0123456789');
+    $withdrawResult = gggpaySdk::withdraw('10012', 1.06, 'MYR', 'CIBBMYKL', 'GGGPay Test', '234719327401231','', 'gggpay@hotmail.com', '0123456789');
     echo $withdrawResult;
 
     // Here is an example of a detail
     // return detail result:code=1,message=,transactionId=,amount=,fee=
-    $detailResult = gggpaySdk::detail('10854', 1);
+    $detailResult = gggpaySdk::detail('10921', 1);
     echo $detailResult;
 
     // Decrypt the encrypted information in the callback

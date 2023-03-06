@@ -249,7 +249,7 @@ class gggpaySdk
         $sb = "";
         $chars = str_split('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789');
         for ($i = 1; $i <= 8; $i++) {
-            $index = rand(0, count($chars));
+            $index = rand(0, count($chars)-1);
             $sb = $sb . $chars[$index];
         }
         $bytes = self::stringToBytes($sb);
