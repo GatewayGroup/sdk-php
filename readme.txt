@@ -51,3 +51,8 @@ Restart the Apache Server.
 5.
 extension=openssl
 extension=php_openssl.dll
+
+6. 
+错误：error:0407109F:rsa routines:RSA_padding_check_PKCS1_type2:pkcs decoding error
+解决：$HASH_ALGORITHM = 'rsa-sha256' 改成  'sha256WithRSAEncryption'
+或者升级您的PHP版本到8.0以上，确保openssl版本库是：openssl-1.1.1。
