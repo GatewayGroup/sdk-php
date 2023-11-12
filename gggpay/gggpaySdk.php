@@ -109,7 +109,7 @@ class gggpaySdk
             // Remember, the format of json and the order of json attributes must be the same as the SDK specifications.
             // The sorting rules of Json attribute data are arranged from [a-z]
             $bodyJson = "{\"order\":{\"amount\":\"" . $amount . "\",\"currencyType\":\"" . (self::isnull($currency) ? "MYR" : $currency) . "\",\"id\":\"" . $orderId . "\"},\"recipient\":{\"email\":\"" . $recipientEmail . "\",\"methodRef\":\"" . $refName . "\",\"methodType\":\"" . $bankCode . "\",\"methodValue\":\"" . $accountNumber . "\",\"name\":\"" . $cardholder . "\",\"phone\":\"" . $recipientPhone . "\"}}";
-            //$bodyJson = "{\"order\":{\"amount\":\"" . $amount . "\",\"currencyType\":\"" . (self::isnull($currency) ? "MYR" : $currency) . "\",\"id\":\"" . $orderId . "\"},\"payoutspeed\":\"normal\",\"recipient\":{\"email\":\"" . $recipientEmail . "\",\"methodRef\":\"" . $refName . "\",\"methodType\":\"" . $bankCode . "\",\"methodValue\":\"" . $accountNumber . "\",\"name\":\"" . $cardholder . "\",\"phone\":\"" . $recipientPhone . "\"}}";
+            //$bodyJson = "{\"callbackUrl\":\"https://www.google.com\",\"order\":{\"amount\":\"" . $amount . "\",\"currencyType\":\"" . (self::isnull($currency) ? "MYR" : $currency) . "\",\"id\":\"" . $orderId . "\"},\"payoutspeed\":\"normal\",\"recipient\":{\"email\":\"" . $recipientEmail . "\",\"methodRef\":\"" . $refName . "\",\"methodType\":\"" . $bankCode . "\",\"methodValue\":\"" . $accountNumber . "\",\"name\":\"" . $cardholder . "\",\"phone\":\"" . $recipientPhone . "\"}}";
             $base64ReqBody = self::sortedAfterToBased64($bodyJson);
             $signature = self::createSignature($cnst, $base64ReqBody);
             $encryptData = self::symEncrypt($base64ReqBody);
