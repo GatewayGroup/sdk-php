@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Summary of gggpaySdk
+ * Summary of gatewaySdk
  */
-class gggpaySdk
+class gatewaySdk
 {
     /**
      * rsa algorithm
@@ -43,7 +43,7 @@ class gggpaySdk
         try {
             $token = self::getToken();
             if (self::isnull($token)) return $result;
-            $requestUrl = "gggpay/"  . gggpayCfg::$VERSION_NO . "/createPayment";
+            $requestUrl = "gateway/"  . gatewayCfg::$VERSION_NO . "/createPayment";
             $cnst = self::generateConstant($requestUrl);
             // If callbackUrl and redirectUrl are empty, take the values ​​of [curl] and [rurl] in the developer center.
             // Remember, the format of json and the order of json attributes must be the same as the SDK specifications.
@@ -103,7 +103,7 @@ class gggpaySdk
         try {
             $token = self::getToken();
             if (self::isnull($token)) return $result;
-            $requestUrl = "gggpay/" . gggpayCfg::$VERSION_NO . "/withdrawRequest";
+            $requestUrl = "gateway/" . gatewayCfg::$VERSION_NO . "/withdrawRequest";
             $cnst = self::generateConstant($requestUrl);
             // payoutspeed contain "fast", "normal", "slow" ,default is : "fast"
             // Remember, the format of json and the order of json attributes must be the same as the SDK specifications.
@@ -146,7 +146,7 @@ class gggpaySdk
         try {
             $token = self::getToken();
             if (self::isnull($token)) return $result;
-            $requestUrl = "gggpay/" . gggpayCfg::$VERSION_NO . "/getTransactionStatusById";
+            $requestUrl = "gateway/" . gatewayCfg::$VERSION_NO . "/getTransactionStatusById";
             $cnst = self::generateConstant($requestUrl);
             // Remember, the format of json and the order of json attributes must be the same as the SDK specifications.
             // The sorting rules of Json attribute data are arranged from [a-z]
@@ -178,12 +178,12 @@ class gggpaySdk
     {
         $token = "";
         if (self::isnull(self::$EncryptAuthInfo)) {
-            $authString = self::stringToBase64(gggpayCfg::$CLIENT_ID . ":" . gggpayCfg::$CLIENT_SECRET);
+            $authString = self::stringToBase64(gatewayCfg::$CLIENT_ID . ":" . gatewayCfg::$CLIENT_SECRET);
             self::$EncryptAuthInfo = self::publicEncrypt($authString);
         }
         $json=["data"=>self::$EncryptAuthInfo];
         $keys = array("code", "encryptedToken");
-        $dict = self::post("gggpay/"  . gggpayCfg::$VERSION_NO . "/createToken", "", "", $json, "", "", $keys);
+        $dict = self::post("gateway/"  . gatewayCfg::$VERSION_NO . "/createToken", "", "", $json, "", "", $keys);
         if (!self::isnull($dict["code"]) && !self::isnull($dict["encryptedToken"]) && strval($dict["code"]) == "1") {
             $token = self::symDecrypt($dict["encryptedToken"]);
         }
@@ -201,10 +201,10 @@ class gggpaySdk
      */
     private static function post($url, $token, $signature, $json, $nonceStr, $timestamp)
     {
-        if (self::endWith(gggpayCfg::$BASE_URL, "/")) {
-            $url = gggpayCfg::$BASE_URL . $url;
+        if (self::endWith(gatewayCfg::$BASE_URL, "/")) {
+            $url = gatewayCfg::$BASE_URL . $url;
         } else {
-            $url = gggpayCfg::$BASE_URL . "/" . $url;
+            $url = gatewayCfg::$BASE_URL . "/" . $url;
         }
         $options = array(
             "http" => array(
@@ -273,7 +273,7 @@ class gggpaySdk
      */
     private static function publicEncrypt($data)
     {
-        if(openssl_public_encrypt($data, $encryptData, gggpayCfg::$SERVER_PUB_KEY, OPENSSL_PKCS1_PADDING))
+        if(openssl_public_encrypt($data, $encryptData, gatewayCfg::$SERVER_PUB_KEY, OPENSSL_PKCS1_PADDING))
         {
             $encryptBytes = self::stringToBytes($encryptData);
             return self::bytesToHex($encryptBytes);
@@ -288,7 +288,7 @@ class gggpaySdk
      */
     private static function privateDecrypt($encryptData)
     {
-        openssl_private_decrypt($encryptData, $decrypted, gggpayCfg::$PRIVATE_KEY, OPENSSL_PKCS1_PADDING);
+        openssl_private_decrypt($encryptData, $decrypted, gatewayCfg::$PRIVATE_KEY, OPENSSL_PKCS1_PADDING);
         $json = json_decode($decrypted);
         return $json;
     }
@@ -299,8 +299,8 @@ class gggpaySdk
      */
     private static function symEncrypt($message)
     {
-        $iv = self::generateIv(gggpayCfg::$CLIENT_SYMMETRIC_KEY);
-        $cipherData = openssl_encrypt($message, self::$ALGORITHM, gggpayCfg::$CLIENT_SYMMETRIC_KEY, OPENSSL_RAW_DATA, $iv);
+        $iv = self::generateIv(gatewayCfg::$CLIENT_SYMMETRIC_KEY);
+        $cipherData = openssl_encrypt($message, self::$ALGORITHM, gatewayCfg::$CLIENT_SYMMETRIC_KEY, OPENSSL_RAW_DATA, $iv);
         return self::stringToHex($cipherData);
     }
 
@@ -311,8 +311,8 @@ class gggpaySdk
     public static function symDecrypt($encryptedMessage)
     {
         $encryptedText = self::hexToString($encryptedMessage);
-        $iv = self::generateIv(gggpayCfg::$CLIENT_SYMMETRIC_KEY);
-        $decrypted = openssl_decrypt($encryptedText, self::$ALGORITHM, gggpayCfg::$CLIENT_SYMMETRIC_KEY, OPENSSL_RAW_DATA, $iv);
+        $iv = self::generateIv(gatewayCfg::$CLIENT_SYMMETRIC_KEY);
+        $decrypted = openssl_decrypt($encryptedText, self::$ALGORITHM, gatewayCfg::$CLIENT_SYMMETRIC_KEY, OPENSSL_RAW_DATA, $iv);
         if($decrypted){
             return $decrypted;
         }else{
@@ -326,7 +326,7 @@ class gggpaySdk
      */
     private static function sign($data)
     {
-        openssl_sign($data, $signature, gggpayCfg::$PRIVATE_KEY, self::$HASH_ALGORITHM);
+        openssl_sign($data, $signature, gatewayCfg::$PRIVATE_KEY, self::$HASH_ALGORITHM);
         return self::stringToBase64($signature);;
     }
 
@@ -337,7 +337,7 @@ class gggpaySdk
      */
     private static function verify($data, $signature)
     {
-        return openssl_verify($data, $signature, gggpayCfg::$SERVER_PUB_KEY, self::$HASH_ALGORITHM);
+        return openssl_verify($data, $signature, gatewayCfg::$SERVER_PUB_KEY, self::$HASH_ALGORITHM);
     }
 
     /** Return base64 after sorting argument list

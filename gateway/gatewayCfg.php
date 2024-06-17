@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Summary of gggpayCfg
+ * Summary of gatewayCfg
  */
-class gggpayCfg
+class gatewayCfg
 {
 
     //-- begin config --------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ class gggpayCfg
     public static $VERSION_NO = "v1";
 
     /**
-     * GGGPay Api Url
+     * gateway Api Url
      */
     public static $BASE_URL = "http://localhost:3000/";
 
@@ -80,8 +80,8 @@ class gggpayCfg
     //-- end config --------------------------------------------------------------------------------
 
     /** initialize this configuration
-     * @param $verNo GGGPay Api Version Number
-     * @param $apiUrl apiUrl GGGPay Api Url
+     * @param $verNo gateway Api Version Number
+     * @param $apiUrl apiUrl gateway Api Url
      * @param $appId appId in developer settings : AppId
      * @param $key key in developer settings : Key
      * @param $secret secret in developer settings : secret
